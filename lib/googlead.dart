@@ -8,7 +8,6 @@ class NewAdMob extends StatefulWidget {
 
 class _NewAdMobState extends State<NewAdMob> {
   BannerAd? _bannerAd;
-
   @override
   void initState() {
     super.initState();

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:testadmob/googlead.dart';
+import 'package:testadmob/main.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
-
   @override
   _HomeState createState() => _HomeState();
 }
@@ -14,8 +13,12 @@ class _HomeState extends State<Home> {
 
   BannerAd? _ad;
   InterstitialAd? _interstitialAd;
-  int num_of_attempt_load = 0;
+  RewardedAd? rewardedAd;
 
+  int num_of_attempt_load = 0;
+  bool isloading = false;
+
+  ///initerstitiald ads
   void creatinter() {
     InterstitialAd.load(
       adUnitId: InterstitialAd.testAdUnitId,
@@ -54,6 +57,26 @@ class _HomeState extends State<Home> {
     _interstitialAd = null;
   }
 
+  ///rewaeredad
+  void rewaerdad() {
+    RewardedAd.load(
+      adUnitId: RewardedAd.testAdUnitId,
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (rad) {
+          print("rewaerdad ad");
+          rewardedAd = rad;
+          setState(() {
+            isloading = true;
+          });
+        },
+        onAdFailedToLoad: (error) {
+          print("rewaerdad error");
+        },
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -73,8 +96,11 @@ class _HomeState extends State<Home> {
         onAdClosed: (Ad ad) => print('$BannerAd onAdClosed.'),
       ),
     );
-
     _ad?.load();
+    creatinter();
+    showinter();
+    rewaerdad();
+    showOpenAd();
   }
 
   @override
@@ -92,8 +118,7 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showinter();
-          creatinter();
+          showOpenAd();
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
               return NewAdMob();
@@ -105,9 +130,19 @@ class _HomeState extends State<Home> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "Google Ad",
-              style: TextStyle(fontSize: 30),
+            TextButton(
+              onPressed: () {
+                rewardedAd?.show(onUserEarnedReward: (ad, reward) {
+                  print("user watched complete ");
+                });
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return NewAdMob();
+                }));
+              },
+              child: const Text(
+                "Google Ad",
+                style: TextStyle(fontSize: 30),
+              ),
             ),
             const SizedBox(
               height: 10,
