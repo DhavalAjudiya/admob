@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:testadmob/app_open_ad_manager.dart';
 import 'package:testadmob/googlead.dart';
 import 'package:testadmob/home.dart';
 import 'admob_flutter.dart';
@@ -31,27 +32,32 @@ void showOpenAd() {
     loadAd();
     return;
   }
-
+  print("try to loading");
   openAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (ad) {},
       onAdFailedToShowFullScreenContent: (ad, error) {
+        print("try to loading------111");
         ad.dispose();
         openAd = null;
         loadAd();
       },
       onAdDismissedFullScreenContent: (ad) {
+        print("try to loading----222");
         ad.dispose();
         openAd = null;
         loadAd();
       });
+  print("show ***********");
   openAd!.show();
 }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();
-  await loadAd();
-  showOpenAd();
+  // loadAd();
+  // showOpenAd();
+  AppOpenAdManager().loadAd();
+  AppOpenAdManager().showAdIfAvailable();
   runApp(const MyApp());
 }
 
