@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:testadmob/admanag.dart';
 
 class AContaroller extends GetxController {
   BannerAd? ad;
@@ -25,24 +26,25 @@ class AContaroller extends GetxController {
   //
   // AdSize size = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(
   //     _adWidth.truncate());
+  String bannerId = FirebaseRemoteConfigUtils.appOpenId;
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     bannerAd();
-    createInterstitialAd();
-    // createRewardedAd();
-    // createRewardedInterstitialAd();
   }
 
   ///bannerAd
-  void bannerAd() {
+  Future<void> bannerAd() async {
+    print("asasasass ---->>>>>${FirebaseRemoteConfigUtils.appOpenId}");
+
     ad = BannerAd(
       adUnitId: BannerAd.testAdUnitId,
       request: AdRequest(),
       size: AdSize.mediumRectangle,
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
+          print("asasasass1---->>>>>${FirebaseRemoteConfigUtils.appOpenId}");
           print('$BannerAd loaded.');
         },
         onAdFailedToLoad: (Ad ad, LoadAdError error) {
@@ -53,6 +55,40 @@ class AContaroller extends GetxController {
       ),
     );
     ad?.load();
+  }
+
+  Future<Widget> getBannerWidget({
+    required BuildContext context,
+    AdSize? adSize,
+  }) async {
+    BannerAd bannerAd = BannerAd(
+      adUnitId: BannerAd.testAdUnitId,
+      request: AdRequest(),
+      size: AdSize.mediumRectangle,
+      listener: BannerAdListener(
+        onAdLoaded: (Ad ad) {
+          print("asasasass1---->>>>>${FirebaseRemoteConfigUtils.appOpenId}");
+          print('$BannerAd loaded.');
+        },
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {
+          print('$BannerAd failedToLoad: $error');
+        },
+        onAdOpened: (Ad ad) => print('$BannerAd onAdOpened.'),
+        onAdClosed: (Ad ad) => print('$BannerAd onAdClosed.'),
+      ),
+    );
+
+    await bannerAd.load();
+
+    return Container(
+      child: AdWidget(ad: bannerAd),
+      constraints: BoxConstraints(
+        maxHeight: 90,
+        maxWidth: MediaQuery.of(context).size.width,
+        minHeight: 32,
+        minWidth: MediaQuery.of(context).size.width,
+      ),
+    );
   }
 
   ///InterstitialAd
