@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -26,13 +27,26 @@ class AContaroller extends GetxController {
   //
   // AdSize size = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(
   //     _adWidth.truncate());
-  String bannerId = FirebaseRemoteConfigUtils.appOpenId;
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    bannerAd();
+    // bannerAd();
   }
+
+  // Future<Object> obj() async {
+  //   Object? _objdatabase;
+  //   await FirebaseDatabase.instance
+  //       .ref()
+  //       .child('banner_id_android')
+  //       .get()
+  //       .then((DataSnapshot snapshot) {
+  //     print("banner_id-----${_objdatabase.toString()}");
+  //
+  //     _objdatabase = snapshot.value;
+  //   });
+  //   return _objdatabase ?? "";
+  // }
 
   ///bannerAd
   Future<void> bannerAd() async {

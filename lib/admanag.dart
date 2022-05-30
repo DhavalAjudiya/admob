@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 class FirebaseRemoteConfigUtils {
@@ -27,4 +28,14 @@ class FirebaseRemoteConfigUtils {
       print(e);
     }
   }
+}
+
+class FirebaseRealtimeUtils {
+  static final FirebaseRealtimeUtils _realtimeUtils =
+      FirebaseRealtimeUtils._internal();
+  factory FirebaseRealtimeUtils() {
+    return _realtimeUtils;
+  }
+  FirebaseRealtimeUtils._internal();
+  static const String openAppAdsId = 'bannerId';
 }

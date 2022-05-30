@@ -1,24 +1,30 @@
 import 'dart:developer';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:testadmob/admanag.dart';
+
+DatabaseReference databaseReference = FirebaseDatabase.instance.ref('users');
 
 class BannerAds extends StatefulWidget {
   static bool isLoaded = false;
+
   const BannerAds({Key? key}) : super(key: key);
+
   @override
   _BannerAdsState createState() => _BannerAdsState();
 }
 
 class _BannerAdsState extends State<BannerAds> {
   BannerAd? _ad;
+
   @override
   void initState() {
-    super.initState();
     // clearBannerAdData();
     // CustomBanners();
     adsFunction();
-    _ad!.load();
+    super.initState();
   }
 
   // clearBannerAdData() {
@@ -27,11 +33,24 @@ class _BannerAdsState extends State<BannerAds> {
   //     AdConstants.id = 0;
   //     AdConstants.redirectionLink = '';
   //   });
-  // }
-  void adsFunction() {
+
+  String bannerId = FirebaseRemoteConfigUtils.appOpenId;
+
+  void adsFunction() async {
+    log("***********");
+    final firebaseRef = FirebaseDatabase(
+            databaseURL:
+                "https://admob-a6edb-default-rtdb.europe-west1.firebasedatabase.app/")
+        .reference()
+        .child("banner_id_android");
+    DataSnapshot data = await firebaseRef.get();
+
+    log("Data------>${data.value} \n ");
+
+    log("***********5");
     _ad = BannerAd(
       size: AdSize.fullBanner,
-      adUnitId: BannerAd.testAdUnitId,
+      adUnitId: bannerId,
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
           setState(() {
@@ -46,17 +65,41 @@ class _BannerAdsState extends State<BannerAds> {
         onAdClosed: (Ad ad) => print('$BannerAd onAdClosed.'),
       ),
       request: const AdRequest(),
-    );
+    )..load();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: AdWidget(
-        ad: _ad!,
-      ),
-      width: _ad!.size.width.toDouble(),
-      height: _ad!.size.height.toDouble(),
+      // child: GestureDetector(
+      //     onTap: () async {
+      //       final firebaseRef = FirebaseDatabase(
+      //               databaseURL:
+      //                   "https://admob-a6edb-default-rtdb.europe-west1.firebasedatabase.app/")
+      //           .reference()
+      //           .child("Items");
+      //       await firebaseRef.set({
+      //         "name": 'Hemali',
+      //         "job": "flutter",
+      //       }).then((_) {
+      //         log("***********1111");
+      //         // Data saved successfully!
+      //       }).catchError((error) {
+      //         // The write failed...
+      //       });
+      //
+      //       await databaseReference.once().then((a) {
+      //         log("Data------>${a.type.index} \n ");
+      //       });
+      //     },
+      //     child: Container(height: 40, color: Colors.red)),
+      child: _ad == null
+          ? const CircularProgressIndicator()
+          : AdWidget(
+              ad: _ad!,
+            ),
+      width: _ad?.size.width.toDouble(),
+      height: _ad?.size.height.toDouble(),
       alignment: Alignment.center,
     );
   }

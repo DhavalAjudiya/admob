@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "767961059512",
+    "firebase_url": "https://admob-a6edb-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "admob-a6edb",
     "storage_bucket": "admob-a6edb.appspot.com"
   },
@@ -32,7 +33,8 @@
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-7556725778661360~3114775001"
     }
   ],
   "configuration_version": "1"
