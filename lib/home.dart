@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -21,6 +22,20 @@ class _HomeState extends State<Home> {
 
   int num_of_attempt_load = 0;
   bool isloading = false;
+  any() async {
+    try {
+      final userCredential = await FirebaseAuth.instance.signInAnonymously();
+      print("Signed in with temporary account.");
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "operation-not-allowed":
+          print("Anonymous auth hasn't been enabled for this project.");
+          break;
+        default:
+          print("Unknown error.");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +74,7 @@ class _HomeState extends State<Home> {
             TextButton(
               onPressed: () {
                 // rewaerdad();
+                any();
                 aContaroller.createRewardedAd();
                 // Navigator.push(context, MaterialPageRoute(builder: (context) {
                 //   return NewAdMob();

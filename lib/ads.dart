@@ -41,7 +41,7 @@ class _BannerAdsState extends State<BannerAds> {
     final firebaseRef = FirebaseDatabase(
             databaseURL:
                 "https://admob-a6edb-default-rtdb.europe-west1.firebasedatabase.app/")
-        .reference()
+        .ref()
         .child("banner_id_android");
     DataSnapshot data = await firebaseRef.get();
 

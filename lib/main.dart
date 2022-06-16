@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:testadmob/admanag.dart';
 import 'package:testadmob/app_open_ad_manager.dart';
+import 'package:testadmob/frozen.dart';
 import 'package:testadmob/googlead.dart';
 import 'package:testadmob/home.dart';
+import 'package:testadmob/image_store.dart';
 import 'admob_flutter.dart';
 import 'firebase_core.dart';
 
@@ -61,7 +63,6 @@ Future<void> main() async {
   await MobileAds.instance.initialize();
   await FirebaseRemoteConfigUtils().initMethod();
 
-
   // static String appOpenAdsId = FirebaseRemoteConfigUtils.appOpenId;
   // loadAd();
   // showOpenAd();
@@ -77,7 +78,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: FrostedDemo(),
     );
   }
 }
