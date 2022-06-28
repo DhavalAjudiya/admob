@@ -8,6 +8,7 @@ import 'package:testadmob/frozen.dart';
 import 'package:testadmob/googlead.dart';
 import 'package:testadmob/home.dart';
 import 'package:testadmob/image_store.dart';
+import 'package:testadmob/images/ima.dart';
 import 'admob_flutter.dart';
 import 'firebase_core.dart';
 
