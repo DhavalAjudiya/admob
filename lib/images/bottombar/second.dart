@@ -35,7 +35,7 @@ class _GodState extends State<God> {
         body: Column(
           children: [
             StreamBuilder<QuerySnapshot>(
-              stream: DatabaseHelper.getGodsImage(),
+              stream: DatabaseHelper.getAnimal(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.active) {
                   snapshot.data?.docs.forEach(
@@ -56,6 +56,7 @@ class _GodState extends State<God> {
                           // snapshot.data!.docs.forEach((element) {
                           //   log("element--->${element.data()}");
                           // });
+                          String docId = snapshot.data!.docs[index].id;
 
                           return Padding(
                             padding: const EdgeInsets.only(top: 12),
@@ -85,31 +86,32 @@ class _GodState extends State<God> {
                                         backgroundColor: Colors.blueGrey,
                                         child: IconButton(
                                           onPressed: () async {
-                                            print(
-                                                "animal.change ---${snapshot.data!.docs[index]["im"]}");
-                                            try {
-                                              print(
-                                                  "imageId---11---->>>${snapshot.data!.docs[index]["im"]}");
+                                            await DatabaseHelper.updateAnimal(
+                                                ch: true, docId: docId);
 
+                                            try {
                                               var imageId =
                                                   await ImageDownloader
                                                       .downloadImage(snapshot
                                                           .data
                                                           ?.docs[index]["im"]);
-                                              print("imageId---->>>$imageId");
+
                                               if (imageId == null) {
                                                 return;
                                               }
                                               await GallerySaver.saveImage(
                                                   imageId,
                                                   albumName: "HDwallpaper");
-                                              // Below is a method of obtaining saved image information.
                                             } on PlatformException catch (error) {
                                               print(
                                                   "PlatformException-----$error");
                                             }
                                           },
-                                          icon: Icon(Icons.download),
+                                          icon: snapshot.data?.docs[index]
+                                                      ["ch"] ==
+                                                  true
+                                              ? Icon(Icons.done)
+                                              : Icon(Icons.download),
                                         ),
                                       ),
                                     ),

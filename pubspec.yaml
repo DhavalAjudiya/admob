@@ -48,6 +48,12 @@ dependencies:
   image_downloader: ^0.31.0
   gallery_saver: ^2.3.2
   skeleton_loader: ^2.0.0+4
+  slide_to_act: ^2.0.1
+  image_compression_flutter: ^1.0.2
+  flimer: ^1.0.1
+  http: ^0.13.4
+  intl: ^0.17.0
+  pedometer: ^3.0.0
 
 
 #  cloud_firestore: ^3.1.10
@@ -66,7 +72,6 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
 

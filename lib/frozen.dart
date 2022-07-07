@@ -16,8 +16,9 @@ class _FrostedDemoState extends State<FrostedDemo> {
       body: Stack(
         children: <Widget>[
           ConstrainedBox(
-              constraints: const BoxConstraints.expand(),
-              child: const FlutterLogo()),
+            constraints: const BoxConstraints.expand(),
+            child: const FlutterLogo(),
+          ),
           Center(
             child: ClipRect(
               child: BackdropFilter(

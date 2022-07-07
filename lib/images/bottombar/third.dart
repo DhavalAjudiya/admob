@@ -48,6 +48,7 @@ class Car extends StatelessWidget {
                           // snapshot.data!.docs.forEach((element) {
                           //   log("element--->${element.data()}");
                           // });
+                          String docId = snapshot.data!.docs[index].id;
 
                           return Padding(
                             padding: const EdgeInsets.only(top: 12),
@@ -77,15 +78,14 @@ class Car extends StatelessWidget {
                                         child: IconButton(
                                           onPressed: () async {
                                             try {
-                                              print(
-                                                  "imageId---11---->>>${snapshot.data?.docs[index]["im"]}");
+                                              await DatabaseHelper.updateCar(
+                                                  ch: true, docId: docId);
 
                                               var imageId =
                                                   await ImageDownloader
                                                       .downloadImage(snapshot
                                                           .data
                                                           ?.docs[index]["im"]);
-                                              print("imageId---->>>$imageId");
                                               if (imageId == null) {
                                                 return;
                                               }
@@ -98,7 +98,11 @@ class Car extends StatelessWidget {
                                                   "PlatformException-----$error");
                                             }
                                           },
-                                          icon: Icon(Icons.download),
+                                          icon: snapshot.data?.docs[index]
+                                                      ["ch"] ==
+                                                  true
+                                              ? Icon(Icons.done)
+                                              : Icon(Icons.download),
                                         ),
                                         backgroundColor: Colors.blueGrey,
                                       ),

@@ -16,7 +16,9 @@ class Nature extends StatefulWidget {
 }
 
 class _NatureState extends State<Nature> {
-  bool change = false;
+  final CollectionReference<Map<String, dynamic>> _firebaseFirestore =
+      FirebaseFirestore.instance.collection("nature");
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -50,9 +52,11 @@ class _NatureState extends State<Nature> {
                         ),
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) {
-                          snapshot.data!.docs.forEach((element) {
-                            log("element--->${element.data()}");
-                          });
+                          // snapshot.data!.docs.forEach((element) {
+                          //   log("element--->${element.data()}");
+                          // });
+                          String docId = snapshot.data!.docs[index].id;
+                          log("docId--->$docId");
 
                           return Padding(
                             padding: const EdgeInsets.only(top: 12),
@@ -79,18 +83,18 @@ class _NatureState extends State<Nature> {
                                       bottom: 5,
                                       right: 15,
                                       child: CircleAvatar(
-                                        child: IconButton(
-                                          onPressed: () async {
-                                            try {
-                                              print(
-                                                  "imageId---11---->>>${snapshot.data?.docs[index]["im"]}");
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            await DatabaseHelper.updateNature(
+                                                ch: true, docId: docId);
 
+                                            try {
                                               var imageId =
                                                   await ImageDownloader
                                                       .downloadImage(snapshot
                                                           .data
                                                           ?.docs[index]["im"]);
-                                              print("imageId---->>>$imageId");
+
                                               if (imageId == null) {
                                                 return;
                                               }
@@ -103,10 +107,32 @@ class _NatureState extends State<Nature> {
                                                   "PlatformException-----$error");
                                             }
                                           },
-                                          icon: Icon(Icons.download),
+                                          child: snapshot.data?.docs[index]
+                                                      ["ch"] ==
+                                                  true
+                                              ? Icon(Icons.done)
+                                              : Icon(Icons.download),
                                         ),
                                         backgroundColor: Colors.blueGrey,
                                       ),
+                                    ),
+                                    Positioned(
+                                      bottom: 5,
+                                      left: 15,
+                                      child: snapshot.data?.docs[index]["ch"] ==
+                                              true
+                                          ? CircleAvatar(
+                                              child: GestureDetector(
+                                                onTap: () async {
+                                                  await DatabaseHelper
+                                                      .deleteNature(
+                                                          docId: docId);
+                                                },
+                                                child: Icon((Icons.delete)),
+                                              ),
+                                              backgroundColor: Colors.blueGrey,
+                                            )
+                                          : SizedBox(),
                                     ),
                                   ],
                                 )
@@ -117,7 +143,9 @@ class _NatureState extends State<Nature> {
                       ),
                     );
                   } else {
-                    return const Text("No data!");
+                    return Center(
+                      child: const Text("No data!"),
+                    );
                   }
                 } else {
                   return const Center(
