@@ -55,6 +55,7 @@ dependencies:
   intl: ^0.17.0
   pedometer: ^3.0.0
   flutter_inapp_purchase: any
+  facebook_audience_network: ^1.0.1
 
 
 #  cloud_firestore: ^3.1.10
