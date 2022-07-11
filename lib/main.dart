@@ -5,12 +5,14 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:testadmob/admanag.dart';
 import 'package:testadmob/api/fetch.dart';
+import 'package:testadmob/api/streamapi.dart';
 import 'package:testadmob/app_open_ad_manager.dart';
 import 'package:testadmob/frozen.dart';
 import 'package:testadmob/googlead.dart';
 import 'package:testadmob/home.dart';
 import 'package:testadmob/image_store.dart';
 import 'package:testadmob/images/ima.dart';
+import 'package:testadmob/radio.dart';
 import 'package:testadmob/realtime_database/realtime_datbse_add_data.dart';
 import 'admob_flutter.dart';
 import 'firebase_core.dart';
@@ -82,7 +84,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Screen(),
+      home: Radioa(),
     );
   }
 }

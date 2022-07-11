@@ -15,12 +15,13 @@ class Controller extends GetxController {
   void onInit() {
     print("-------12------");
 
-    fatchData(0);
+    fatchData();
     print("-------123------");
-
+    //  scrollController.positions.p(index,
+    //     preferPosition: AutoScrollPosition.begin);
+    // scrollController.highlight(index);
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
         print("pixel ==>>${scrollController.position.pixels}");
         print("-------select------");
 
@@ -31,10 +32,26 @@ class Controller extends GetxController {
     super.onInit();
   }
 
-  void fatchData(int select) async {
+  void scrollup() {
+    scrollController.animateTo(
+      scrollController.position.minScrollExtent,
+      duration: Duration(seconds: 2),
+      curve: Curves.easeInCubic,
+    );
+  }
+
+  void scrollDown() {
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent,
+      duration: Duration(seconds: 2),
+      curve: Curves.easeInCubic,
+    );
+  }
+
+  void fatchData() async {
     try {
-      final result = await FetchApiService.getFetchData(0);
-      fetchData.value = result!;
+      final result = await FetchApiService.getFetchData();
+      fetchData.value = result as HomePageModel;
 
       // for (var element in fetchData.value) {
       //   for ( var index in element.topicList?.data ?? []) {
@@ -66,8 +83,8 @@ class Controller extends GetxController {
     try {
       select++;
       print("select---------->>>${select}");
-      final result = await FetchApiService.getFetchData(select);
-      fetchData.value = result!;
+      final result = await FetchApiService.getFetchData();
+      fetchData.value = result as HomePageModel;
       if (fetchData.value.topicList!.data!.isNotEmpty) {
         data.addAll(fetchData.value.topicList!.data!);
         print("data==>>>>${data.length}");

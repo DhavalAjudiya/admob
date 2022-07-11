@@ -54,6 +54,7 @@ dependencies:
   http: ^0.13.4
   intl: ^0.17.0
   pedometer: ^3.0.0
+  flutter_inapp_purchase: any
 
 
 #  cloud_firestore: ^3.1.10

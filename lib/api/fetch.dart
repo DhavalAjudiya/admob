@@ -48,96 +48,108 @@ class _ScreenState extends State<Screen> {
             SizedBox(
               height: 50,
             ),
-            SizedBox(
-              height: 400,
-              width: 350,
-              child: Obx(() => ListView.builder(
-                    controller: controller.scrollController,
-                    itemCount: controller.data.length,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      ///20 data ///EVENT
-                      ///pageIndex++  ==   listlength ˜/ 20; ??INDEX
-                      ///API call
-                      print(
-                          "loading ==>> ${controller.scrollController.position.pixels}");
-                      print(
-                          "commentdata----1----> ${controller.data.first.comments?.first.id}");
-                      print(
-                          "commentdata----1----> ${controller.data.first.comments?.first.user?.name}");
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                SizedBox(
+                  height: 400,
+                  width: 350,
+                  child: Obx(() => ListView.builder(
+                        controller: controller.scrollController,
+                        itemCount: controller.data.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          ///20 data ///EVENT
+                          ///pageIndex++  ==   listlength ˜/ 20; ??INDEX
+                          ///API call
+                          print("loading ==>> ${controller.scrollController.position.pixels}");
+                          print("commentdata----1----> ${controller.data.first.comments?.first.id}");
+                          print("commentdata----1----> ${controller.data.first.comments?.first.user?.name}");
 
-                      print(
-                          "commentdata----1----> ${controller.data.first.comments?.first.user?.email}");
+                          print("commentdata----1----> ${controller.data.first.comments?.first.user?.email}");
 
-                      print(
-                          "commentdata----1----> ${controller.data.first.comments?.first.user?.geoCountry}");
-                      // WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-                      //   ///AFTER WIDGET BUILD
-                      // });
-                      final data = controller.data[index];
-                      return Row(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("${data.geoCountry}"),
-                                  Text(
-                                      "${data.comments?.first.user?.geoCountry}"),
-                                  Text("${data.title}"),
-                                  Row(
+                          print("commentdata----1----> ${controller.data.first.comments?.first.user?.geoCountry}");
+                          // WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+                          //   ///AFTER WIDGET BUILD
+                          // });
+                          final data = controller.data[index];
+                          return Row(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Column(
+                                      Text("${data.geoCountry}"),
+                                      Text("${data.comments?.first.user?.geoCountry}"),
+                                      Text("${data.title}"),
+                                      Row(
                                         children: [
-                                          Text("${data.user?.username}"),
-                                          Text("${data.user?.email}"),
+                                          Column(
+                                            children: [
+                                              Text("${data.user?.username}"),
+                                              Text("${data.user?.email}"),
+                                            ],
+                                          ),
+                                          Spacer(),
+                                          Column(
+                                            children: [
+                                              Text("${data.id}"),
+                                              Text("${data.user?.id}"),
+                                            ],
+                                          ),
                                         ],
                                       ),
-                                      Spacer(),
-                                      Column(
-                                        children: [
-                                          Text("${data.id}"),
-                                          Text("${data.user?.id}"),
-                                        ],
+                                      Center(
+                                        child: Image.network(
+                                          "${data.user?.profile}",
+                                          width: 80,
+                                        ),
                                       ),
+                                      Text("${data.user?.bio}", style: TextStyle(color: Colors.white)),
+                                      Text("${data.user?.code}"),
+                                      Text("${DateFormat("EEE, d MMM").format(data.user?.emailVerifiedAt ?? DateTime.now())}"),
+                                      Text("${DateFormat("EEE, d MMM").format(data.user?.updatedAt ?? DateTime.now())}"),
+                                      Text("${data.user?.private}"),
                                     ],
                                   ),
-                                  Center(
-                                    child: Image.network(
-                                      "${data.user?.profile}",
-                                      width: 80,
-                                    ),
-                                  ),
-                                  Text("${data.user?.bio}",
-                                      style: TextStyle(color: Colors.white)),
-                                  Text("${data.user?.code}"),
-                                  Text(
-                                      "${DateFormat("EEE, d MMM").format(data.user?.emailVerifiedAt ?? DateTime.now())}"),
-                                  Text(
-                                      "${DateFormat("EEE, d MMM").format(data.user?.updatedAt ?? DateTime.now())}"),
-                                  Text("${data.user?.private}"),
-                                ],
+                                ),
+                                margin: EdgeInsets.all(12),
+                                color: Colors.red,
+                                width: 360,
+                                // height: 280,
                               ),
-                            ),
-                            margin: EdgeInsets.all(12),
-                            color: Colors.red,
-                            width: 360,
-                            // height: 280,
-                          ),
-                          controller.data.value.length - 1 == index
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : const SizedBox(),
-                        ],
-                      );
-                    },
-                  )),
+                              controller.data.value.length - 1 == index
+                                  ? const Center(
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          );
+                        },
+                      )),
+                ),
+                Positioned(
+                  bottom: 30,
+                  right: 25,
+                  child: CircleAvatar(
+                    child: IconButton(
+                      icon: Icon(Icons.swipe_up_alt_sharp),
+                      onPressed: () {
+                        print("------------p${controller.scrollController.position.pixels}");
+                        print("------------p${controller.scrollController.position.maxScrollExtent}");
+                        controller.scrollController.position.maxScrollExtent.isLowerThan(0.0) != 0.0
+                            ? controller.scrollup()
+                            : controller.scrollDown();
+                      },
+                    ),
+                  ),
+                )
+              ],
             ),
           ],
         ),
