@@ -11,9 +11,12 @@ import 'package:testadmob/frozen.dart';
 import 'package:testadmob/googlead.dart';
 import 'package:testadmob/home.dart';
 import 'package:testadmob/image_store.dart';
+import 'package:testadmob/image_store/image_pick.dart';
+import 'package:testadmob/image_store/shared_preference.dart';
 import 'package:testadmob/images/ima.dart';
 import 'package:testadmob/radio.dart';
 import 'package:testadmob/realtime_database/realtime_datbse_add_data.dart';
+import 'package:testadmob/widget_value.dart';
 import 'admob_flutter.dart';
 import 'firebase_core.dart';
 
@@ -68,6 +71,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await MobileAds.instance.initialize();
   await FirebaseRemoteConfigUtils().initMethod();
+  await AppPreference.initMySharedPreferences();
 
   // static String appOpenAdsId = FirebaseRemoteConfigUtils.appOpenId;
   // loadAd();
@@ -84,7 +88,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Screen(),
+      home: ImagePick(),
     );
   }
 }

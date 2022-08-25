@@ -2,16 +2,15 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 class FirebaseRemoteConfigUtils {
-  static final FirebaseRemoteConfigUtils _configUtils =
-      FirebaseRemoteConfigUtils._internal();
+  static final FirebaseRemoteConfigUtils _configUtils = FirebaseRemoteConfigUtils._internal();
   factory FirebaseRemoteConfigUtils() {
     return _configUtils;
   }
+
   FirebaseRemoteConfigUtils._internal();
   static const String openAppAdsId = 'adunitid';
   // static const String openAppAdsShowOrNot = 'ads_show_flag';
-  static final FirebaseRemoteConfig _remoteConfig =
-      FirebaseRemoteConfig.instance;
+  static final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
   static String get appOpenId => _remoteConfig.getString(openAppAdsId);
   // static bool get isOpenAdsShowOrNot =>
   //     _remoteConfig.getBool(openAppAdsShowOrNot);
@@ -19,9 +18,7 @@ class FirebaseRemoteConfigUtils {
     try {
       final remoteConfig = FirebaseRemoteConfig.instance;
       await remoteConfig.setConfigSettings(
-        RemoteConfigSettings(
-            fetchTimeout: const Duration(seconds: 1),
-            minimumFetchInterval: const Duration(seconds: 0)),
+        RemoteConfigSettings(fetchTimeout: const Duration(seconds: 1), minimumFetchInterval: const Duration(seconds: 0)),
       );
       await _remoteConfig.fetchAndActivate();
     } catch (e) {
@@ -31,8 +28,7 @@ class FirebaseRemoteConfigUtils {
 }
 
 class FirebaseRealtimeUtils {
-  static final FirebaseRealtimeUtils _realtimeUtils =
-      FirebaseRealtimeUtils._internal();
+  static final FirebaseRealtimeUtils _realtimeUtils = FirebaseRealtimeUtils._internal();
   factory FirebaseRealtimeUtils() {
     return _realtimeUtils;
   }
