@@ -23,20 +23,26 @@ class _ImagePickState extends State<ImagePick> {
           const SizedBox(height: 80),
           GestureDetector(
             onTap: () => {_onPictureSelection()},
-            child: Container(
-              height: 100,
-              width: 250,
-              child: imageController.pickedImageFile == null
-                  ? SizedBox()
-                  : Image.file(
-                      File("${imageController.pickedImageFile}"),
+            child: Obx(
+              () => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 200,
+                  width: 250,
+                  child: imageController.seletedImagePath.value == null
+                      ? SizedBox()
+                      : Image.file(
+                          File(imageController.seletedImagePath.value),
+                          fit: BoxFit.cover,
+                        ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1.0,
+                      color: Colors.grey,
                     ),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 3.0,
-                  color: Colors.grey,
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                  ),
                 ),
-                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
               ),
             ),
           ),
