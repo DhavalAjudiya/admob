@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:sizer/sizer.dart';
 import 'package:testadmob/admanag.dart';
 import 'package:testadmob/api/fetch.dart';
 import 'package:testadmob/api/streamapi.dart';
@@ -16,6 +17,7 @@ import 'package:testadmob/image_store/shared_preference.dart';
 import 'package:testadmob/images/ima.dart';
 import 'package:testadmob/radio.dart';
 import 'package:testadmob/realtime_database/realtime_datbse_add_data.dart';
+import 'package:testadmob/sliver.dart';
 import 'package:testadmob/widget_value.dart';
 import 'admob_flutter.dart';
 import 'firebase_core.dart';
@@ -86,9 +88,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ImagePick(),
+    return Sizer(
+      builder: (BuildContext context, Orientation orientation, DeviceType deviceType) {
+        return const GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: ImagePick(),
+        );
+      },
     );
   }
 }

@@ -48,7 +48,7 @@ class _ImagePickState extends State<ImagePick> {
           ),
           ElevatedButton(
               onPressed: () {
-                Get.to(ShowImage());
+                Get.to(() => ShowImage());
               },
               child: Text("next")),
         ],

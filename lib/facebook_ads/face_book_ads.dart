@@ -35,7 +35,7 @@ class FaceBookAds extends StatelessWidget {
                   }
                 },
               );
-              Get.to(SecondAdPage());
+              Get.to(() => SecondAdPage());
             },
             child: const Text("InterstitialAd"),
           ),
@@ -58,7 +58,7 @@ class FaceBookAds extends StatelessWidget {
                     //   _isRewardedAdLoaded = false;
                     //   _loadRewardedVideoAd();
                     // }
-                    Get.to(SecondAdPage());
+                    Get.to(() => SecondAdPage());
                   }
                 },
               );

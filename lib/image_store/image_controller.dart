@@ -4,6 +4,7 @@ import 'dart:io' as Io;
 
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:testadmob/image_store/shared_preference.dart';
 
 class ImageController extends GetxController {
