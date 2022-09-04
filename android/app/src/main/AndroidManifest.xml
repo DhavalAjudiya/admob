@@ -8,7 +8,7 @@
    <application
         android:label="testadmob"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/ic_launcher">
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyAF-ck0hICD1ji1klRX_J8Tsv3Zz7PU6vk"/>`
         <activity
