@@ -60,8 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    AuthRepo.registrationRepo(
-                        email: _email.text, pass: _pass.text);
+                    AuthRepo.registrationRepo(email: _email.text, pass: _pass.text);
                   }
                 },
                 child: Text('Registration'),
@@ -69,18 +68,17 @@ class _LoginScreenState extends State<LoginScreen> {
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    bool? status = await AuthRepo.loginRepo(
-                        email: _email.text, pass: _pass.text);
+                    bool? status = await AuthRepo.loginRepo(email: _email.text, pass: _pass.text);
 
                     if (status == true) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text('Login success!'),
                         ),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text('Login failed!'),
                         ),
                       );
@@ -103,15 +101,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  AuthRepo.deleteuseraccount(
-                      context: context, email: _email.text, pass: _pass.text);
+                  AuthRepo.deleteuseraccount(context: context, email: _email.text, pass: _pass.text);
                 },
                 child: Text('delete user'),
               ),
               ElevatedButton(
                 onPressed: () {
-                  AuthRepo.sendpasswordresetemail(
-                      context: context, email: _email.text);
+                  AuthRepo.sendpasswordresetemail(context: context, email: _email.text);
                 },
                 child: Text('forget pass'),
               ),

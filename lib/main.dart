@@ -1,90 +1,54 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sizer/sizer.dart';
 import 'package:testadmob/admanag.dart';
-import 'package:testadmob/api/fetch.dart';
-import 'package:testadmob/api/streamapi.dart';
 import 'package:testadmob/app_open_ad_manager.dart';
-import 'package:testadmob/frozen.dart';
-import 'package:testadmob/googlead.dart';
-import 'package:testadmob/home.dart';
-import 'package:testadmob/image_store.dart';
 import 'package:testadmob/image_store/image_pick.dart';
 import 'package:testadmob/image_store/shared_preference.dart';
-import 'package:testadmob/images/ima.dart';
-import 'package:testadmob/radio.dart';
-import 'package:testadmob/realtime_database/realtime_datbse_add_data.dart';
-import 'package:testadmob/sliver.dart';
-import 'package:testadmob/widget_value.dart';
-import 'admob_flutter.dart';
-import 'firebase_core.dart';
 
-AppOpenAd? openAd;
+AppOpenAd? myAppOpenAd;
 
-Future<void> loadAd() async {
-  await AppOpenAd.load(
-    adUnitId: "ca-app-pub-7556725778661360~3114775001",
-    request: AdRequest(),
-    adLoadCallback: AppOpenAdLoadCallback(
-      onAdLoaded: (oad) {
-        print("open ad");
-        openAd = oad;
-        // openAd!.show();
-      },
-      onAdFailedToLoad: (error) {
-        print("error open $error");
-      },
-    ),
-    orientation: AppOpenAd.orientationPortrait,
-  );
-}
-
-void showOpenAd() {
-  if (openAd == null) {
-    print("try to loading");
-    loadAd();
-    return;
-  }
-  print("try to loading");
-  openAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (ad) {},
-      onAdFailedToShowFullScreenContent: (ad, error) {
-        print("try to loading------111");
-        ad.dispose();
-        openAd = null;
-        loadAd();
-      },
-      onAdDismissedFullScreenContent: (ad) {
-        print("try to loading----222");
-        ad.dispose();
-        openAd = null;
-        loadAd();
-      });
-  print("show ***********");
-  openAd!.show();
+void loadAppOpenAd() {
+  AppOpenAd.load(
+      adUnitId: "ca-app-pub-3940256099942544/3419835294", //Your ad Id from admob
+      request: const AdRequest(),
+      adLoadCallback: AppOpenAdLoadCallback(
+          onAdLoaded: (ad) {
+            myAppOpenAd = ad;
+            myAppOpenAd!.show();
+          },
+          onAdFailedToLoad: (error) {}),
+      orientation: AppOpenAd.orientationPortrait);
 }
 
 Future<void> main() async {
-  print('main function call');
+  // print('main function call');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await MobileAds.instance.initialize();
+  loadAppOpenAd();
   await FirebaseRemoteConfigUtils().initMethod();
   await AppPreference.initMySharedPreferences();
 
-  // static String appOpenAdsId = FirebaseRemoteConfigUtils.appOpenId;
-  // loadAd();
-  // showOpenAd();
-  // AppOpenAdManager().loadAd();
-  // AppOpenAdManager().showAdIfAvailable();
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    print("main file call");
+    // AppOpenAdManager.loadAd();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

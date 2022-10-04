@@ -1,13 +1,15 @@
 import 'package:facebook_audience_network/facebook_audience_network.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FBAdsController extends GetxController {
   FacebookBannerAd? currentAd;
   FacebookNativeAd? nativeBanner;
+  FacebookInterstitialAd? interstitialAd;
+
   bool _isInterstitialAdLoaded = false;
   bool _isRewardedAdLoaded = false;
+
   @override
   void onInit() {
     print(" ----- FBAdsController -----");
@@ -51,8 +53,7 @@ class FBAdsController extends GetxController {
 
   ///nativeBanner Ad
   nativeBannerAd() {
-    nativeBanner = FacebookNativeAd(
-      // placementId: "YOUR_PLACEMENT_ID",
+    FacebookNativeAd(
       placementId: "IMG_16_9_APP_INSTALL#2312433698835503_2964953543583512",
       adType: NativeAdType.NATIVE_BANNER_AD,
       height: 200,
@@ -70,44 +71,35 @@ class FBAdsController extends GetxController {
     );
   }
 
-  InterstitialAd() {
+  interstitialAdView({Function(InterstitialAdResult, dynamic)? listener}) {
     FacebookInterstitialAd.loadInterstitialAd(
       // placementId: "YOUR_PLACEMENT_ID",
       placementId: "IMG_16_9_APP_INSTALL#2312433698835503_2650502525028617",
-      listener: (result, value) {
-        print(">> FAN > Interstitial Ad: $result --> $value");
-        if (result == InterstitialAdResult.LOADED) {
-          FacebookInterstitialAd.showInterstitialAd();
-        }
-
-        /// Once an Interstitial Ad has been dismissed and becomes invalidated,
-        /// load a fresh Ad by calling this function.
-        if (result == InterstitialAdResult.DISMISSED && value["invalidated"] == true) {
-          _isInterstitialAdLoaded = false;
-          InterstitialAd();
-        }
-      },
+      listener: listener,
     );
   }
-
+// InterstitialAd() {
+//   interstitialAd =
+// }
   ///native Ad
-  // nativeAd() {
-  //   nativeBanner = FacebookNativeAd(
-  //     placementId: "IMG_16_9_APP_INSTALL#2312433698835503_2964952163583650",
-  //     adType: NativeAdType.NATIVE_AD_VERTICAL,
-  //     width: double.infinity,
-  //     height: 300,
-  //     backgroundColor: Colors.blue,
-  //     titleColor: Colors.white,
-  //     descriptionColor: Colors.white,
-  //     buttonColor: Colors.deepPurple,
-  //     buttonTitleColor: Colors.white,
-  //     buttonBorderColor: Colors.white,
-  //     listener: (result, value) {
-  //       print("Native Ad: $result --> $value");
-  //     },
-  //     keepExpandedWhileLoading: true,
-  //     expandAnimationDuraion: 1000,
-  //   );
-  // }
+// nativeAd() {
+//   nativeBanner = FacebookNativeAd(
+//     placementId: "IMG_16_9_APP_INSTALL#2312433698835503_2964952163583650",
+//     adType: NativeAdType.NATIVE_AD_VERTICAL,
+//     width: double.infinity,
+//     : 300,
+//     backgroundColor: Colors.blue,
+//     titleColor: Colors.white,
+//     descriptionColor: Colors.white,
+//     buttonColor: Colors.deepPurple,
+//     buttonTitleColor: Colors.white,
+//     buttonBorderColor: Colors.white,
+//     listener: (result, value) {
+//       print("Native Ad: $result --> $value");
+//     },
+//     keepExpandedWhileLoading: true,
+//     expandAnimationDuraion: 1000,
+//   );
+// }
+
 }

@@ -6,8 +6,7 @@ FirebaseAuth kFirebaseAuth = FirebaseAuth.instance;
 class AuthRepo {
   static Future registrationRepo({String? email, String? pass}) async {
     try {
-      await kFirebaseAuth.createUserWithEmailAndPassword(
-          email: email!, password: pass!);
+      await kFirebaseAuth.createUserWithEmailAndPassword(email: email!, password: pass!);
     } catch (e) {
       print('register error =>$e');
     }
@@ -15,8 +14,7 @@ class AuthRepo {
 
   static Future<bool?> loginRepo({String? email, String? pass}) async {
     try {
-      await kFirebaseAuth.signInWithEmailAndPassword(
-          email: email!, password: pass!);
+      await kFirebaseAuth.signInWithEmailAndPassword(email: email!, password: pass!);
       return true;
     } catch (e) {
       print('login error =>$e');
@@ -33,24 +31,22 @@ class AuthRepo {
     kFirebaseAuth.signOut();
   }
 
-  static deleteuseraccount(
-      {String? email, String? pass, BuildContext? context}) async {
+  static deleteuseraccount({String? email, String? pass, BuildContext? context}) async {
     User? user = kFirebaseAuth.currentUser;
 
-    AuthCredential credential =
-        EmailAuthProvider.credential(email: email!, password: pass!);
+    AuthCredential credential = EmailAuthProvider.credential(email: email!, password: pass!);
 
     await user!.reauthenticateWithCredential(credential).then((value) {
       value.user!.delete().then((res) {
         ScaffoldMessenger.of(context!).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text("User Account Deleted"),
           ),
         );
       });
     }).catchError((onError) {
       ScaffoldMessenger.of(context!).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("Credential Error"),
         ),
       );
@@ -62,13 +58,13 @@ class AuthRepo {
       // Get.offAll(LoginPage());
       // Get.snackbar("Password Reset email link is been sent", "Success");
       ScaffoldMessenger.of(context!).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("Password Reset email link is been sent"),
         ),
       );
     }).catchError((onError) {
       ScaffoldMessenger.of(context!).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("Error In Email Reset"),
         ),
       );

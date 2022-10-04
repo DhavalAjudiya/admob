@@ -18,8 +18,7 @@ class GetData extends StatefulWidget {
 }
 
 class _GetDataState extends State<GetData> {
-  final databaseReference =
-      FirebaseDatabase.instance.ref().child("UserData").child("user");
+  final databaseReference = FirebaseDatabase.instance.ref().child("UserData").child("user");
 
   final ValueNotifier<bool> isDisable = ValueNotifier(true);
   final TextEditingController _emailController = TextEditingController();
@@ -27,12 +26,9 @@ class _GetDataState extends State<GetData> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _hobbyController = TextEditingController();
   final TextEditingController _schoolFriendController = TextEditingController();
-  final TextEditingController _schoolFriendSirNameController =
-      TextEditingController();
-  final TextEditingController _collegeFriendController =
-      TextEditingController();
-  final TextEditingController _collegeFriendSirNameController =
-      TextEditingController();
+  final TextEditingController _schoolFriendSirNameController = TextEditingController();
+  final TextEditingController _collegeFriendController = TextEditingController();
+  final TextEditingController _collegeFriendSirNameController = TextEditingController();
 
   List dataList = [];
   Map itemData = {};
@@ -58,7 +54,6 @@ class _GetDataState extends State<GetData> {
     List<User> list = [];
     DatabaseEvent snap = await databaseReference.once();
     print("resultList[i]===>${snap.snapshot.children}");
-
     List<dynamic> resultList = snap.snapshot.children.toList();
     var abc = <String, dynamic>{};
     for (var i = 0; i < resultList.length; i++) {
@@ -67,19 +62,9 @@ class _GetDataState extends State<GetData> {
     }
     var map = abc;
     print("snapshot.value[i]===>$map");
-
-    // list.add(User(
-    //   email: map["email"].toString(),
-    //   friendMap: FriendMap.fromJson(map["friendMap"]),
-    //   hobby: List<String>.from(map["hobby"].map((x) => x)),
-    //   number: map["number"].toString(),
-    //   password: map["password"].toString(),
-    // ));
     itemData = map;
-
     User user = User.fromJson(itemData);
     print("userToJson ${user.toJson()}");
-
     setState(() {});
     print("resultList[i]===leng>${list.length}");
   }
@@ -128,16 +113,14 @@ class _GetDataState extends State<GetData> {
                     ),
                     table(
                       data: "Collage Friends",
-                      text:
-                          "${user?.friendMap?.clgfriend?.first.name} ${user?.friendMap?.clgfriend?.first.sirName}  ",
+                      text: "${user?.friendMap?.clgfriend?.first.name} ${user?.friendMap?.clgfriend?.first.sirName}  ",
                       editOnPress: () {
                         _showDialog(context);
                       },
                     ),
                     table(
                       data: "School Friends",
-                      text:
-                          "${user?.friendMap?.schoolFriend?.first.name} ${user?.friendMap?.schoolFriend?.first.sirName}  ",
+                      text: "${user?.friendMap?.schoolFriend?.first.name} ${user?.friendMap?.schoolFriend?.first.sirName}  ",
                       editOnPress: () {
                         _showDialog(context);
                       },
@@ -292,10 +275,7 @@ class _GetDataState extends State<GetData> {
       "hobby": _hobbyController.text,
       "friendMap": {
         'clgfriend': [
-          {
-            "name": _collegeFriendController.text,
-            "sirName": _collegeFriendSirNameController.text
-          }
+          {"name": _collegeFriendController.text, "sirName": _collegeFriendSirNameController.text}
         ],
         'schoolFriend': [
           {
