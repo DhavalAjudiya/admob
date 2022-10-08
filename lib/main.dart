@@ -28,7 +28,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await MobileAds.instance.initialize();
-  loadAppOpenAd();
+  // loadAppOpenAd();
   await FirebaseRemoteConfigUtils().initMethod();
   await AppPreference.initMySharedPreferences();
 
