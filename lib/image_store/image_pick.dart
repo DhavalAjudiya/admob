@@ -8,7 +8,6 @@ import 'package:images_picker/images_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:testadmob/app_open_ad_manager.dart';
 import 'package:testadmob/image_store/image_controller.dart';
-import 'package:testadmob/image_store/show_image.dart';
 
 class ImagePick extends StatefulWidget {
   const ImagePick({Key? key}) : super(key: key);
@@ -103,26 +102,49 @@ class _ImagePickState extends State<ImagePick> with WidgetsBindingObserver {
           Stack(
             clipBehavior: Clip.none,
             children: [
+              // isShowAd == true
+              //     ? const Positioned(
+              //         top: 10,
+              //         child: CircularProgressIndicator(
+              //           color: Colors.red,
+              //         ),
+              //       )
+              //     : SizedBox(),
               isShowAd == true
-                  ? const Positioned(
-                      top: 10,
-                      child: CircularProgressIndicator(
-                        color: Colors.red,
+                  ? Container(
+                      decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(10)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 2),
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    "asset/image/loud.gif",
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              width: 100,
+                              height: 80,
+                            ),
+                            // const SizedBox(height: 3),
+                            const Text("Loading..."),
+                          ],
+                        ),
                       ),
                     )
-                  : SizedBox(),
-              isShowAd == true
-                  ? const CircularProgressIndicator()
                   : ElevatedButton(
                       onPressed: () {
                         print("---Future-delayed----Before---");
                         // dealt();
                         isShowAd = true;
                         setState(() {});
-                        Future.delayed(Duration(seconds: 2), () {
+                        Future.delayed(Duration(seconds: 5), () {
                           isShowAd = false;
                           setState(() {});
-                          Get.to(() => ShowImage());
+                          // Get.to(() => ShowImage());
                           print("---Future-delayed----After---");
                         });
                       },
