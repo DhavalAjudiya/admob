@@ -5,8 +5,10 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sizer/sizer.dart';
 import 'package:testadmob/admanag.dart';
 import 'package:testadmob/app_open_ad_manager.dart';
+import 'package:testadmob/syncfusion/pichart.dart';
 import 'package:testadmob/image_store/image_pick.dart';
 import 'package:testadmob/image_store/shared_preference.dart';
+import 'package:testadmob/syncfusion/syncfusion_home.dart';
 
 AppOpenAd? myAppOpenAd;
 
@@ -56,7 +58,7 @@ class _MyAppState extends State<MyApp> {
       builder: (BuildContext context, Orientation orientation, DeviceType deviceType) {
         return const GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: ImagePick(),
+          home: SyncfusionHome(),
         );
       },
     );

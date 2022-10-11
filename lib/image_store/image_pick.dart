@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -99,79 +100,113 @@ class _ImagePickState extends State<ImagePick> with WidgetsBindingObserver {
               ),
             ),
           ),
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              // isShowAd == true
-              //     ? const Positioned(
-              //         top: 10,
-              //         child: CircularProgressIndicator(
-              //           color: Colors.red,
-              //         ),
-              //       )
-              //     : SizedBox(),
-              isShowAd == true
-                  ? Container(
-                      decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(10)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 2),
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "asset/image/loud.gif",
-                                  ),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              width: 100,
-                              height: 80,
-                            ),
-                            // const SizedBox(height: 3),
-                            const Text("Loading..."),
-                          ],
-                        ),
-                      ),
-                    )
-                  : ElevatedButton(
-                      onPressed: () {
-                        print("---Future-delayed----Before---");
-                        // dealt();
-                        isShowAd = true;
-                        setState(() {});
-                        Future.delayed(Duration(seconds: 5), () {
-                          isShowAd = false;
-                          setState(() {});
-                          // Get.to(() => ShowImage());
-                          print("---Future-delayed----After---");
-                        });
-                      },
-                      child: Text("next")),
-            ],
+          // Stack(
+          //   clipBehavior: Clip.none,
+          //   children: [
+          //     isShowAd == true
+          //         ? Container(
+          //             decoration: BoxDecoration(color: Colors.black45, borderRadius: BorderRadius.circular(10)),
+          //             child: Padding(
+          //               padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 2),
+          //               child: Column(
+          //                 children: [
+          //                   Container(
+          //                     decoration: const BoxDecoration(
+          //                       image: DecorationImage(
+          //                         image: AssetImage(
+          //                           "asset/image/loud.gif",
+          //                         ),
+          //                         fit: BoxFit.cover,
+          //                       ),
+          //                     ),
+          //                     width: 100,
+          //                     height: 80,
+          //                   ),
+          //                   const Text("Loading..."),
+          //                 ],
+          //               ),
+          //             ),
+          //           )
+          //         : ElevatedButton(
+          //             onPressed: () {
+          //               print("---Future-delayed----Before---");
+          //               // dealt();
+          //               isShowAd = true;
+          //               setState(() {});
+          //               Future.delayed(Duration(seconds: 5), () {
+          //                 isShowAd = false;
+          //                 setState(() {});
+          //                 // Get.to(() => ShowImage());
+          //                 print("---Future-delayed----After---");
+          //               });
+          //             },
+          //             child: const Text("next")),
+          //   ],
+          // ),
+          GestureDetector(
+            child: const Text('pickDate'),
+            onTap: () {
+              print("pickDate-------onChanged------");
+
+              try {
+                dateTimePicker(onChanged: (val) {
+                  print("pickDate-------onChanged-----1-$val");
+                });
+              } catch (e) {
+                print("pickDate-------error-------$e");
+              }
+              // dateTimeFormat();
+              // print("error-----0");
+              //
+              // try {
+              //   print("error-----1");
+              //
+              //   await ImagesPicker.pick(
+              //     count: 3,
+              //     pickType: PickType.all,
+              //     language: Language.System,
+              //     maxTime: 30,
+              //     cropOpt: CropOption(
+              //       cropType: CropType.circle,
+              //     ),
+              //   );
+              //   print("error-----3");
+              // } catch (e) {
+              //   print("error---->>$e");
+              // }
+              // print(res);
+              // if (res != null) {
+              //   print(res.map((e) => e.path).toList());
+              //   setState(() {
+              //     path = res[0].thumbPath;
+              //   });
+              //   // bool status = await ImagesPicker.saveImageToAlbum(File(res[0]?.path));
+              //   // print(status);
+              // }
+            },
           ),
           ElevatedButton(
             child: const Text('pick'),
             onPressed: () async {
-              print("error-----0");
-
-              try {
-                print("error-----1");
-
-                await ImagesPicker.pick(
-                  count: 3,
-                  pickType: PickType.all,
-                  language: Language.System,
-                  maxTime: 30,
-                  cropOpt: CropOption(
-                    cropType: CropType.circle,
-                  ),
-                );
-                print("error-----3");
-              } catch (e) {
-                print("error---->>$e");
-              }
+              // dateTimeFormat();
+              // print("error-----0");
+              //
+              // try {
+              //   print("error-----1");
+              //
+              //   await ImagesPicker.pick(
+              //     count: 3,
+              //     pickType: PickType.all,
+              //     language: Language.System,
+              //     maxTime: 30,
+              //     cropOpt: CropOption(
+              //       cropType: CropType.circle,
+              //     ),
+              //   );
+              //   print("error-----3");
+              // } catch (e) {
+              //   print("error---->>$e");
+              // }
               // print(res);
               // if (res != null) {
               //   print(res.map((e) => e.path).toList());
@@ -188,6 +223,46 @@ class _ImagePickState extends State<ImagePick> with WidgetsBindingObserver {
     );
   }
 
+  Widget dateTimePicker({required ValueChanged<String>? onChanged}) {
+    return DateTimePicker(
+      initialValue: '',
+      decoration: const InputDecoration(
+        isDense: true,
+        // suffixIcon: Image.asset(
+        //   IconsAsset.dateAndTime,
+        //   scale: 3,
+        // ),
+        counterText: "",
+        // hintText: hintText,
+        // hintStyle: TextStyle(
+        //   color: AppColors.textColor,
+        //   fontSize: SizeUtils.fSize_14(),
+        //   fontWeight: FontWeight.w400,
+        // ),
+        filled: true,
+        // fillColor: AppColors.white,
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          // borderSide: BorderSide(color: AppColors.white[80]!),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          // borderSide: BorderSide(color: AppColors.white[80]!),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          // borderSide: BorderSide(color: AppColors.white[80]!),
+        ),
+      ),
+      type: DateTimePickerType.dateTime,
+      dateMask: 'd MMMM, yyyy - hh:mm a',
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+      timeLabelText: "Hour",
+      onChanged: onChanged,
+    );
+  }
+
   // if (!homeController.isTap.value) {
   //   homeController.isTap.value = true;
   //   print("${homeController.isTap.value}");
@@ -198,6 +273,17 @@ class _ImagePickState extends State<ImagePick> with WidgetsBindingObserver {
   //     },
   //   );
   // }
+  String dateTimeFormat(DateTime dt) {
+    DateTime now = DateTime.now();
+    int days = DateTime(dt.year, dt.month, dt.day).difference(DateTime(now.year, now.month, now.day)).inDays;
+    if (days == 0) {
+      return "Today";
+    } else if (days == -1) {
+      return "Yesterday";
+    } else {
+      return DateFormat("yyy.MM.dd").format(dt);
+    }
+  }
 
   Future getImage() async {
     List<Media>? res = await ImagesPicker.pick(
