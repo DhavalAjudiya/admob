@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:testadmob/image_store/shared_preference.dart';
+import 'package:testadmob/tirp/shared_preference.dart';
 
 class ImageController extends GetxController {
   RxList bytesCode = [].obs;

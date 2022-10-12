@@ -12,6 +12,7 @@ import 'package:image_downloader/image_downloader.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:testadmob/image_store/shared_preference.dart';
+import 'package:testadmob/tirp/shared_preference.dart';
 
 class ShowImage extends StatefulWidget {
   const ShowImage({Key? key}) : super(key: key);
