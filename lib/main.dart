@@ -2,15 +2,13 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
+import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sizer/sizer.dart';
 import 'package:testadmob/admanag.dart';
-import 'package:testadmob/app_open_ad_manager.dart';
+import 'package:testadmob/map/Map.dart';
 import 'package:testadmob/net_conectivity.dart';
-import 'package:testadmob/syncfusion/pichart.dart';
-import 'package:testadmob/image_store/image_pick.dart';
-import 'package:testadmob/image_store/shared_preference.dart';
-import 'package:testadmob/syncfusion/syncfusion_home.dart';
 import 'package:testadmob/tirp/shared_preference.dart';
 import 'package:testadmob/tirp/trip_page.dart';
 
@@ -34,6 +32,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await MobileAds.instance.initialize();
+  final GoogleMapsFlutterPlatform mapsImplementation = GoogleMapsFlutterPlatform.instance;
+  if (mapsImplementation is GoogleMapsFlutterAndroid) {
+    mapsImplementation.useAndroidViewSurface = true;
+  }
   // loadAppOpenAd();
   await FirebaseRemoteConfigUtils().initMethod();
   await AppPreference.initMySharedPreferences();
@@ -65,7 +67,7 @@ class _MyAppState extends State<MyApp> {
             builder: (_, __) => BotToastInit()(_, w),
           ),
           debugShowCheckedModeBanner: false,
-          home: TripPage(),
+          home: MapDemo(),
         );
       },
     );

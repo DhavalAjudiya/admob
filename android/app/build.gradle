@@ -40,7 +40,10 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-
+    lintOptions {
+        disable 'InvalidPackage'
+        checkReleaseBuilds false //<- add this line
+    }
     defaultConfig {
         applicationId "com.example.testadmob"
         minSdkVersion 21
