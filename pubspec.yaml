@@ -89,6 +89,8 @@ dependencies:
   connectivity_plus: ^2.3.9
   bot_toast: ^4.0.3
   google_maps_place_picker_mb: ^2.0.0-mb.22
+  place_picker: ^0.10.0
+  google_static_maps_controller: ^1.0.0
 
 
 
