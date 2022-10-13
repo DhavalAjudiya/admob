@@ -73,7 +73,7 @@ class _MapDemoState extends State<MapDemo> {
   }
 
   var imageBytesMap;
-  final Set<Marker> HomeMarkers = new Set();
+  final Set<Marker> HomeMarkers = {};
   static const LatLng homeShowLocation = LatLng(53.350140, -6.266155);
 
   Set<Marker> getHomeMarkers() {
@@ -98,6 +98,20 @@ class _MapDemoState extends State<MapDemo> {
     return HomeMarkers;
   }
 
+  final markers = <Marker>{};
+  MarkerId markerId = const MarkerId("YOUR-MARKER-ID");
+  LatLng latLng = const LatLng(43.2994, 74.2179);
+  @override
+  void initState() {
+    markers.add(
+      Marker(
+        markerId: markerId,
+        position: latLng,
+      ),
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     _buildUrl();
@@ -106,98 +120,103 @@ class _MapDemoState extends State<MapDemo> {
         body: SingleChildScrollView(
           child: Column(children: [
             Container(
-              height: Get.height * 0.30,
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              height: Get.height * 0.95,
+              // padding: const EdgeInsets.symmetric(vertical: 10),
               child: Stack(
                 children: [
-                  // GoogleMap(
-                  //   mapType: MapType.hybrid,
-                  //   initialCameraPosition: const CameraPosition(
-                  //     target: LatLng(0, 0),
-                  //   ),
-                  //   gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
-                  //     Factory<OneSequenceGestureRecognizer>(
-                  //       () => EagerGestureRecognizer(),
-                  //     ),
-                  //   },
-                  //   cameraTargetBounds: CameraTargetBounds.unbounded,
-                  //
-                  //   onMapCreated: (controller) async {
-                  //     print("mapController----${mapController?.mapId}");
-                  //     mapController = controller;
-                  //     mapController?.setMapStyle(mapStyle);
-                  //     await Future.delayed(const Duration(seconds: 1));
-                  //     mapController?.animateCamera(
-                  //       CameraUpdate.newLatLngZoom(
-                  //         const LatLng(21.233481, 72.863687),
-                  //         // const LatLng(53.350140, -6.266155),
-                  //         15,
-                  //       ),
-                  //     );
-                  //
-                  //     // if (post.addresses.length > 1) {
-                  //     //   mapController?.animateCamera(
-                  //     //     CameraUpdate.newLatLngBounds(
-                  //     //       post.boundsFromLatLngList!,
-                  //     //       50,
-                  //     //     ),
-                  //     //   );
-                  //     // } else {
-                  //     //   mapController?.animateCamera(
-                  //     //     CameraUpdate.newLatLngZoom(
-                  //     //       LatLng(
-                  //     //         post.addresses[0].position.latitude,
-                  //     //         post.addresses[0].position.longitude,
-                  //     //       ),
-                  //     //       15,
-                  //     //     ),
-                  //     //   );
-                  //     // }
-                  //   },
-                  //   buildingsEnabled: false,
-                  //   // liteModeEnabled: true,
-                  //   // tiltGesturesEnabled: true,
-                  //   // indoorViewEnabled: true,
-                  //   mapToolbarEnabled: false,
-                  //   compassEnabled: false,
-                  //   zoomControlsEnabled: false,
-                  //   // myLocationButtonEnabled: false,
-                  //   // polylines: {
-                  //   //   Polyline(
-                  //   //     polylineId: const PolylineId('1'),
-                  //   //     color: Theme.of(context).primaryColor,
-                  //   //     patterns: const [PatternItem.dot],
-                  //   //     width: 6,
-                  //   //     points: post.addresses
-                  //   //         .map(
-                  //   //           (e) => LatLng(
-                  //   //             e.position.latitude,
-                  //   //             e.position.longitude,
-                  //   //           ),
-                  //   //         )
-                  //   //         .toList(),
-                  //   //   ),
-                  //   // },
-                  //   // markers: post.addresses
-                  //   //     .map(
-                  //   //       (e) => Marker(
-                  //   //         markerId: MarkerId(
-                  //   //           e.position.latitude.toString(),
-                  //   //         ),
-                  //   //         position: LatLng(
-                  //   //           e.position.latitude,
-                  //   //           e.position.longitude,
-                  //   //         ),
-                  //   //         anchor: const Offset(0.5, 0.5),
-                  //   //         icon: Data.mapPin ?? BitmapDescriptor.defaultMarker,
-                  //   //         onTap: () {
-                  //   //           postAddress(e);
-                  //   //         },
-                  //   //       ),
-                  //   //     )
-                  //   //     .toSet(),
-                  //   markers: getHomeMarkers(),
-                  // ),
+                  GoogleMap(
+                    mapType: MapType.hybrid,
+                    initialCameraPosition: const CameraPosition(
+                      target: LatLng(0, 0),
+                    ),
+                    gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{
+                      Factory<OneSequenceGestureRecognizer>(
+                        () => EagerGestureRecognizer(),
+                      ),
+                    },
+                    cameraTargetBounds: CameraTargetBounds.unbounded,
+
+                    onMapCreated: (controller) async {
+                      print("mapController----${mapController?.mapId}");
+                      mapController = controller;
+                      mapController?.setMapStyle(mapStyle);
+                      await Future.delayed(const Duration(seconds: 1));
+                      mapController?.animateCamera(
+                        CameraUpdate.newLatLngZoom(
+                          const LatLng(21.233481, 72.863687),
+                          // const LatLng(53.350140, -6.266155),
+                          15,
+                        ),
+                      );
+
+                      // if (post.addresses.length > 1) {
+                      //   mapController?.animateCamera(
+                      //     CameraUpdate.newLatLngBounds(
+                      //       post.boundsFromLatLngList!,
+                      //       50,
+                      //     ),
+                      //   );
+                      // } else {
+                      //   mapController?.animateCamera(
+                      //     CameraUpdate.newLatLngZoom(
+                      //       LatLng(
+                      //         post.addresses[0].position.latitude,
+                      //         post.addresses[0].position.longitude,
+                      //       ),
+                      //       15,
+                      //     ),
+                      //   );
+                      // }
+                    },
+                    onCameraMove: (position) {
+                      setState(() {
+                        markers.add(Marker(markerId: markerId, position: position.target));
+                      });
+                    },
+                    buildingsEnabled: false,
+                    // liteModeEnabled: true,
+                    // tiltGesturesEnabled: true,
+                    // indoorViewEnabled: true,
+                    mapToolbarEnabled: false,
+                    compassEnabled: false,
+                    zoomControlsEnabled: false,
+                    // myLocationButtonEnabled: false,
+                    // polylines: {
+                    //   Polyline(
+                    //     polylineId: const PolylineId('1'),
+                    //     color: Theme.of(context).primaryColor,
+                    //     patterns: const [PatternItem.dot],
+                    //     width: 6,
+                    //     points: post.addresses
+                    //         .map(
+                    //           (e) => LatLng(
+                    //             e.position.latitude,
+                    //             e.position.longitude,
+                    //           ),
+                    //         )
+                    //         .toList(),
+                    //   ),
+                    // },
+                    // markers: post.addresses
+                    //     .map(
+                    //       (e) => Marker(
+                    //         markerId: MarkerId(
+                    //           e.position.latitude.toString(),
+                    //         ),
+                    //         position: LatLng(
+                    //           e.position.latitude,
+                    //           e.position.longitude,
+                    //         ),
+                    //         anchor: const Offset(0.5, 0.5),
+                    //         icon: Data.mapPin ?? BitmapDescriptor.defaultMarker,
+                    //         onTap: () {
+                    //           postAddress(e);
+                    //         },
+                    //       ),
+                    //     )
+                    //     .toSet(),
+                    markers: getHomeMarkers(),
+                  ),
                   Positioned(
                     bottom: 5,
                     right: 5,
@@ -230,108 +249,108 @@ class _MapDemoState extends State<MapDemo> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                  ),
-                ),
-                controller: addressController,
-                onTap: () async {
-                  await showOkDialog(
-                    context,
-                    "Picker Map",
-                  );
-                  Get.to(
-                    () => PlacePicker(
-                      onMapCreated: (controller) {
-                        // mapController.
-                        mapController = controller;
-                        final imageBytes = mapController?.takeSnapshot();
-
-                        setState(() {
-                          imageBytesMap = imageBytes;
-                        });
-                        print("PlacePicker ---------${imageBytesMap.toString()}- ");
-                      },
-                      hidePlaceDetailsWhenDraggingPin: true,
-                      autocompleteLanguage: 'en',
-                      apiKey: "AIzaSyDdm-Ywb7OBY-aehPYvhYKiZZjIDn4kRAM",
-                      onPlacePicked: (result) {
-                        print("PlacePicker ---------result- ");
-                        //
-                        // addressController.text = result.formattedAddress ?? '';
-                        // final imageBytes = mapController?.takeSnapshot();
-                        //
-                        // setState(() {
-                        //   imageBytesMap = imageBytes;
-                        // });
-                        print("result------$result");
-                        // currentAddress = PostAddress(
-                        //   fullAddress: result.formattedAddress!,
-                        //   streetAddress: result.formattedAddress!,
-                        //   city: result.formattedAddress!,
-                        //   state: result.formattedAddress!,
-                        //   country: result.formattedAddress!,
-                        //   position:
-                        //   ),
-                        // );
-                        GeoPoint(
-                          result.geometry!.location.lat,
-                          result.geometry!.location.lng,
-                        );
-                        Get.back();
-                      },
-                      initialMapType: MapType.hybrid,
-                      usePinPointingSearch: true,
-                      initialPosition: const LatLng(30.669777, 73.657004),
-                      useCurrentLocation: true,
-                    ),
-                  );
-                },
-                validator: (String? s) {
-                  if (s == null || s.isEmpty) {
-                    return "aaaaaa";
-                  }
-                  return null;
-                },
-              ),
-            ),
-            SizedBox(height: 50),
-            Image.network(renderUrl.toString()),
-            SizedBox(height: 20),
-            SizedBox(
-              height: 250,
-              width: 350,
-              child: imageBytesMap != null
-                  ? Image.memory(
-                      imageBytesMap,
-                      fit: BoxFit.cover,
-                    )
-                  : const Text("Loading Image..."),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                mapController?.animateCamera(
-                  CameraUpdate.newLatLngZoom(
-                    const LatLng(21.233481, 72.863687),
-                    // const LatLng(53.350140, -6.266155),
-                    15,
-                  ),
-                );
-                final imageBytes = await mapController?.takeSnapshot();
-
-                setState(() {
-                  imageBytesMap = imageBytes;
-                });
-                // Get.to(const StaticMapDemo());
-              },
-              child: Text("StaticMapDemo"),
-            ),
+            // SizedBox(height: 20),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: TextFormField(
+            //     decoration: const InputDecoration(
+            //       border: OutlineInputBorder(),
+            //       contentPadding: EdgeInsets.symmetric(
+            //         horizontal: 20,
+            //       ),
+            //     ),
+            //     controller: addressController,
+            //     onTap: () async {
+            //       await showOkDialog(
+            //         context,
+            //         "Picker Map",
+            //       );
+            //       Get.to(
+            //         () => PlacePicker(
+            //           onMapCreated: (controller) {
+            //             // mapController.
+            //             mapController = controller;
+            //             final imageBytes = mapController?.takeSnapshot();
+            //
+            //             setState(() {
+            //               imageBytesMap = imageBytes;
+            //             });
+            //             print("PlacePicker ---------${imageBytesMap.toString()}- ");
+            //           },
+            //           hidePlaceDetailsWhenDraggingPin: true,
+            //           autocompleteLanguage: 'en',
+            //           apiKey: "AIzaSyDdm-Ywb7OBY-aehPYvhYKiZZjIDn4kRAM",
+            //           onPlacePicked: (result) {
+            //             print("PlacePicker ---------result- ");
+            //             //
+            //             // addressController.text = result.formattedAddress ?? '';
+            //             // final imageBytes = mapController?.takeSnapshot();
+            //             //
+            //             // setState(() {
+            //             //   imageBytesMap = imageBytes;
+            //             // });
+            //             print("result------$result");
+            //             // currentAddress = PostAddress(
+            //             //   fullAddress: result.formattedAddress!,
+            //             //   streetAddress: result.formattedAddress!,
+            //             //   city: result.formattedAddress!,
+            //             //   state: result.formattedAddress!,
+            //             //   country: result.formattedAddress!,
+            //             //   position:
+            //             //   ),
+            //             // );
+            //             GeoPoint(
+            //               result.geometry!.location.lat,
+            //               result.geometry!.location.lng,
+            //             );
+            //             Get.back();
+            //           },
+            //           initialMapType: MapType.hybrid,
+            //           usePinPointingSearch: true,
+            //           initialPosition: const LatLng(30.669777, 73.657004),
+            //           useCurrentLocation: true,
+            //         ),
+            //       );
+            //     },
+            //     validator: (String? s) {
+            //       if (s == null || s.isEmpty) {
+            //         return "aaaaaa";
+            //       }
+            //       return null;
+            //     },
+            //   ),
+            // ),
+            // SizedBox(height: 50),
+            // Image.network(renderUrl.toString()),
+            // SizedBox(height: 20),
+            // SizedBox(
+            //   height: 250,
+            //   width: 350,
+            //   child: imageBytesMap != null
+            //       ? Image.memory(
+            //           imageBytesMap,
+            //           fit: BoxFit.cover,
+            //         )
+            //       : const Text("Loading Image..."),
+            // ),
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     mapController?.animateCamera(
+            //       CameraUpdate.newLatLngZoom(
+            //         const LatLng(21.233481, 72.863687),
+            //         // const LatLng(53.350140, -6.266155),
+            //         15,
+            //       ),
+            //     );
+            //     final imageBytes = await mapController?.takeSnapshot();
+            //
+            //     setState(() {
+            //       imageBytesMap = imageBytes;
+            //     });
+            //     // Get.to(const StaticMapDemo());
+            //   },
+            //   child: Text("StaticMapDemo"),
+            // ),
             /*     TextFormField(
               controller: addressController,
               onTap: () async {

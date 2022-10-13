@@ -6,6 +6,8 @@ import 'package:google_maps_flutter_android/google_maps_flutter_android.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sizer/sizer.dart';
+import 'package:testadmob/Ads%20Helper/advertisement_controller.dart';
+import 'package:testadmob/Ads%20Helper/get_firebase.dart';
 import 'package:testadmob/admanag.dart';
 import 'package:testadmob/map/Map.dart';
 import 'package:testadmob/net_conectivity.dart';
@@ -51,10 +53,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final AdvertisementController advertisementController = Get.put(AdvertisementController());
   @override
   void initState() {
     print("main file call");
     // AppOpenAdManager.loadAd();
+    advertisementController.advertisementData();
+
     super.initState();
   }
 
