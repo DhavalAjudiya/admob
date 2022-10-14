@@ -9,10 +9,15 @@ import 'package:sizer/sizer.dart';
 import 'package:testadmob/Ads%20Helper/advertisement_controller.dart';
 import 'package:testadmob/Ads%20Helper/get_firebase.dart';
 import 'package:testadmob/admanag.dart';
+import 'package:testadmob/feed_player/feed_player.dart';
 import 'package:testadmob/map/Map.dart';
 import 'package:testadmob/net_conectivity.dart';
 import 'package:testadmob/tirp/shared_preference.dart';
 import 'package:testadmob/tirp/trip_page.dart';
+import 'package:testadmob/viedo_player/feedPlayer.dart';
+import 'package:testadmob/viedo_player/textFeild.dart';
+import 'package:testadmob/viedo_player/text_@.dart';
+import 'package:testadmob/viedo_player/video_player.dart';
 
 AppOpenAd? myAppOpenAd;
 
@@ -72,7 +77,7 @@ class _MyAppState extends State<MyApp> {
             builder: (_, __) => BotToastInit()(_, w),
           ),
           debugShowCheckedModeBanner: false,
-          home: MapDemo(),
+          home: FeedPlayer(),
         );
       },
     );
