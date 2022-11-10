@@ -1,0 +1,42 @@
+group 'com.chavesgu.images_picker'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.1'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 31
+
+    defaultConfig {
+        minSdkVersion 21
+        consumerProguardFiles 'consumer-proguard-rules.pro'
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}
+
+dependencies {
+    implementation 'androidx.annotation:annotation:1.0.2'
+//    implementation 'com.github.LuckSiege:PictureSelectorLight:v2.1.1'
+    implementation 'io.github.lucksiege:pictureselector:v2.7.3-rc10'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+}
