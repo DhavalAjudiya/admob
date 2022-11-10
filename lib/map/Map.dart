@@ -72,9 +72,17 @@ class _MapDemoState extends State<MapDemo> {
     }
   }
 
+  String data = "";
   var imageBytesMap;
   final Set<Marker> HomeMarkers = {};
   static const LatLng homeShowLocation = LatLng(53.350140, -6.266155);
+  String mapPreviewImage({double? latitude, double? longitude}) {
+    data = 'https://maps.googleapis.com/maps/api/staticmap?center=&$latitude,'
+        '$longitude&zoom=16&size=600x300&maptype=terrain&markers=color:green%7Clabel:A%7C$latitude,'
+        '$longitude&key=AIzaSyARWer5afygEbBQHWBDTpZVdmSw5sz1rY4';
+    print("mapPreviewImage===>>>$data");
+    return data;
+  }
 
   Set<Marker> getHomeMarkers() {
     setState(() {
@@ -120,7 +128,7 @@ class _MapDemoState extends State<MapDemo> {
         body: SingleChildScrollView(
           child: Column(children: [
             Container(
-              height: Get.height * 0.95,
+              height: Get.height * 0.3,
               // padding: const EdgeInsets.symmetric(vertical: 10),
               child: Stack(
                 children: [
@@ -166,7 +174,8 @@ class _MapDemoState extends State<MapDemo> {
                       //       15,
                       //     ),
                       //   );
-                      // }
+                      // }53.350140, -6.266155
+                      mapPreviewImage(latitude: 21.233481, longitude: 72.863687);
                     },
                     onCameraMove: (position) {
                       setState(() {
@@ -249,7 +258,11 @@ class _MapDemoState extends State<MapDemo> {
                 ],
               ),
             ),
-            // SizedBox(height: 20),
+            const SizedBox(
+              height: 20,
+            ),
+            Image.network(data),
+            SizedBox(height: 20),
             // Padding(
             //   padding: const EdgeInsets.all(8.0),
             //   child: TextFormField(
@@ -279,7 +292,7 @@ class _MapDemoState extends State<MapDemo> {
             //           },
             //           hidePlaceDetailsWhenDraggingPin: true,
             //           autocompleteLanguage: 'en',
-            //           apiKey: "AIzaSyDdm-Ywb7OBY-aehPYvhYKiZZjIDn4kRAM",
+            //           apiKey: "AIzaSyARWer5afygEbBQHWBDTpZVdmSw5sz1rY4",
             //           onPlacePicked: (result) {
             //             print("PlacePicker ---------result- ");
             //             //

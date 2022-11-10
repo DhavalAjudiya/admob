@@ -36,9 +36,11 @@ class _BannerAdsState extends State<BannerAds> {
   }
 
   void adsFunction() {
+    print('banner ads--${AdConstants.bannerAdsId}');
     _ad = BannerAd(
       size: AdSize.fullBanner,
       adUnitId: AdConstants.bannerAdsId,
+      // adUnitId: "ca-app-pub-3940256099942544/6300978111",
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
           setState(() {
@@ -56,43 +58,43 @@ class _BannerAdsState extends State<BannerAds> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     if (AdConstants.isShowAdsOrNot == true) {
       if (BannerAds.isLoaded) {
-        return AdConstants.isShowFacebookBannerAds?Container(
-      height: 60,
-      alignment: Alignment(0.5, 1),
-      child: FacebookBannerAd(
-        placementId: "${AdConstants.facebookBannerAdUnitId}",
-        bannerSize: BannerSize.STANDARD,
-        listener: (result, value) {
-          switch (result) {
-            case BannerAdResult.ERROR:
-              print("Facebook Banner Ad Error: $value");
-              break;
-            case BannerAdResult.LOADED:
-              print("Facebook Banner Ad Loaded: $value");
-              break;
-            case BannerAdResult.CLICKED:
-              print("Facebook Banner Ad Clicked: $value");
-              break;
-            case BannerAdResult.LOGGING_IMPRESSION:
-              print("Facebook Banner Ad Logging Impression: $value");
-              break;
-          }
-        },
-      ),
-    ):Container(
-      child: AdWidget(
-        ad: _ad!,
-      ),
-      width: _ad!.size.width.toDouble(),
-      height: _ad!.size.height.toDouble(),
-      alignment: Alignment.center,
-    );
+        return AdConstants.isShowFacebookBannerAds
+            ? Container(
+                height: 60,
+                alignment: Alignment(0.5, 1),
+                child: FacebookBannerAd(
+                  placementId: "${AdConstants.facebookBannerAdUnitId}",
+                  bannerSize: BannerSize.STANDARD,
+                  listener: (result, value) {
+                    switch (result) {
+                      case BannerAdResult.ERROR:
+                        print("Facebook Banner Ad Error: $value");
+                        break;
+                      case BannerAdResult.LOADED:
+                        print("Facebook Banner Ad Loaded: $value");
+                        break;
+                      case BannerAdResult.CLICKED:
+                        print("Facebook Banner Ad Clicked: $value");
+                        break;
+                      case BannerAdResult.LOGGING_IMPRESSION:
+                        print("Facebook Banner Ad Logging Impression: $value");
+                        break;
+                    }
+                  },
+                ),
+              )
+            : Container(
+                child: AdWidget(
+                  ad: _ad!,
+                ),
+                width: _ad!.size.width.toDouble(),
+                height: _ad!.size.height.toDouble(),
+                alignment: Alignment.center,
+              );
       } else {
         return const SizedBox();
       }
@@ -185,12 +187,6 @@ class _BannerAdsState extends State<BannerAds> {
 //         : SizedBox();
 //   }
 // }
-
-
-
-
-
-
 
 ///
 

@@ -1,8 +1,7 @@
-
 class AdConstants {
   static int firstCoolDown = 20;
   static int secondCoolDown = 40;
-  static String bannerAdsId = '';
+  static String bannerAdsId = "";
   static String interstitialId = '';
 
   /// for banner Add

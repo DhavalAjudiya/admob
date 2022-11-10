@@ -7,7 +7,6 @@ class PlayerList extends StatefulWidget {
 
   // also allow for a dynamic number of starting players
   final int initialCount;
-
   @override
   _PlayerListState createState() => _PlayerListState();
 }
