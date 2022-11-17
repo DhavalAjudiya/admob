@@ -11,6 +11,7 @@ import 'package:testadmob/admanag.dart';
 import 'package:testadmob/image_store/image_pick.dart';
 import 'package:testadmob/net_conectivity.dart';
 import 'package:testadmob/realtime_database/get_data_realtime.dart';
+import 'package:testadmob/revers_coundown.dart';
 import 'package:testadmob/stream/get_data.dart';
 import 'package:testadmob/tirp/shared_preference.dart';
 
@@ -75,7 +76,7 @@ class _MyAppState extends State<MyApp> {
             builder: (_, __) => BotToastInit()(_, w),
           ),
           debugShowCheckedModeBanner: false,
-          home: GetStreamData(),
+          home: ReversCounDown(),
         );
       },
     );
