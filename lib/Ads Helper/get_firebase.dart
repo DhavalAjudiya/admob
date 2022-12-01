@@ -11,7 +11,7 @@ class AdController extends GetxController {
       // 'firstCountDown': int.parse(firstCountDownController.text),
       // 'secondCountDown': int.parse(secondCountDownController.text),
       'firstCountDown': '5',
-      'secondCountDown': '7',
+      // 'secondCountDown': '7',
       'faceBookInterstitialId': 'IMG_16_9_APP_INSTALL#2312433698835503_2650502525028617',
       'faceBookBannerId': 'IMG_16_9_APP_INSTALL#2312433698835503_2964944860251047',
       'appOpenAdsId': 'ca-app-pub-3940256099942544/3419835294',

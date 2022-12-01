@@ -9,6 +9,7 @@ import 'package:sizer/sizer.dart';
 import 'package:testadmob/Ads%20Helper/advertisement_controller.dart';
 import 'package:testadmob/admanag.dart';
 import 'package:testadmob/image_store/image_pick.dart';
+import 'package:testadmob/near_place/custom_marker_info_window.dart';
 import 'package:testadmob/net_conectivity.dart';
 import 'package:testadmob/realtime_database/get_data_realtime.dart';
 import 'package:testadmob/revers_coundown.dart';
@@ -16,7 +17,7 @@ import 'package:testadmob/stream/get_data.dart';
 import 'package:testadmob/tirp/shared_preference.dart';
 
 AppOpenAd? myAppOpenAd;
-//
+
 // void loadAppOpenAd() {
 //   AppOpenAd.load(
 //       adUnitId: "ca-app-pub-3940256099942544/3419835294", //Your ad Id from admob
@@ -76,7 +77,7 @@ class _MyAppState extends State<MyApp> {
             builder: (_, __) => BotToastInit()(_, w),
           ),
           debugShowCheckedModeBanner: false,
-          home: UserListPage(),
+          home: CustomMarketInfoWindow(),
         );
       },
     );

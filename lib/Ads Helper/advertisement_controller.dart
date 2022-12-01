@@ -62,7 +62,7 @@ class AdvertisementController extends GetxController {
         appInForGroundOrBackGround();
         print('docsOfModel--------7');
 
-        AdsUtils.loadInterstitialAds();
+        // AdsUtils.loadInterstitialAds();
         print('docsOfModel--------8');
         return docsOfModel;
       } catch (e, st) {

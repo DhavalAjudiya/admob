@@ -71,7 +71,7 @@ class _ImagePickState extends State<ImagePick> with WidgetsBindingObserver {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            BannerAds(),
+            // BannerAds(),
             const SizedBox(height: 30),
             Text("${AdConstants.bannerAdsId}"),
             NativeAds(),
@@ -149,7 +149,7 @@ class _ImagePickState extends State<ImagePick> with WidgetsBindingObserver {
             ElevatedButton(
               child: const Text('pick'),
               onPressed: () {
-                AdsUtils.showInterstitialAds();
+                // AdsUtils.showInterstitialAds();
 
                 // dateTimeFormat();
                 // print("error-----0");
