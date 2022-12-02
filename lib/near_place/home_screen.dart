@@ -12,23 +12,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   Completer<GoogleMapController> _controller = Completer();
   List<Marker> _marker = [];
-  List<Marker> _list =  [
-    Marker(markerId: MarkerId('1'),
-    position: LatLng(37.42796133580664, -122.085749655962),
-     infoWindow: InfoWindow(
-       title: 'My Position'
-     )
-    ),
-
-    Marker(markerId: MarkerId('2'),
-        position: LatLng(38.42796133580664, -122.085749655962),
-        infoWindow: InfoWindow(
-            title: 'Second Position'
-        )
-    )
+  final List<Marker> _list = [
+    const Marker(markerId: MarkerId('1'), position: LatLng(37.42796133580664, -122.085749655962), infoWindow: InfoWindow(title: 'My Position')),
+    Marker(markerId: MarkerId('2'), position: LatLng(38.42796133580664, -122.085749655962), infoWindow: InfoWindow(title: 'Second Position'))
   ];
 
   @override
@@ -44,88 +32,76 @@ class _HomeScreenState extends State<HomeScreen> {
     zoom: 14.4746,
   );
 
-  Future<Position> getUserCurrentLocation() async
-  {
-   await Geolocator.requestPermission().then((value){
+  Future<Position> getUserCurrentLocation() async {
+    await Geolocator.requestPermission().then((value) {}).onError((error, stackTrace) {
+      debugPrint('error in getting current location');
+      debugPrint(error.toString());
+    });
 
-   }).onError((error, stackTrace) {
-     debugPrint('error in getting current location');
-     debugPrint(error.toString());
-   });
-
-
-   return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
-  void navigateToCurrentPosition()
-  {
-    getUserCurrentLocation().then((value)async {
+  void navigateToCurrentPosition() {
+    getUserCurrentLocation().then((value) async {
       debugPrint('My current location');
       debugPrint(value.latitude.toString() + value.longitude.toString());
 
       _marker.add(Marker(
           markerId: MarkerId("6"),
-          position: LatLng(value.latitude,value.longitude),
+          position: LatLng(value.latitude, value.longitude),
           infoWindow: InfoWindow(
             title: 'My current location',
-
           )));
 
       CameraPosition cameraPosition = CameraPosition(
-        target:  LatLng(value.latitude,value.longitude),
+        target: LatLng(value.latitude, value.longitude),
         zoom: 14,
       );
 
-      final GoogleMapController controller = await  _controller.future;
+      final GoogleMapController controller = await _controller.future;
       controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-      setState(() {
-
-      });
-
+      setState(() {});
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          getUserCurrentLocation().then((value)async {
+        onPressed: () {
+          getUserCurrentLocation().then((value) async {
             debugPrint('My current location');
             debugPrint(value.latitude.toString() + value.longitude.toString());
 
             _marker.add(Marker(
                 markerId: MarkerId("6"),
-              position: LatLng(value.latitude,value.longitude),
-              infoWindow: InfoWindow(
-                title: 'My current location',
-
-              )));
+                position: LatLng(value.latitude, value.longitude),
+                infoWindow: InfoWindow(
+                  title: 'My current location',
+                )));
 
             CameraPosition cameraPosition = CameraPosition(
-                target:  LatLng(value.latitude,value.longitude),
-            zoom: 14,
+              target: LatLng(value.latitude, value.longitude),
+              zoom: 14,
             );
 
-            final GoogleMapController controller = await  _controller.future;
+            final GoogleMapController controller = await _controller.future;
             controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-            setState(() {
-
-            });
-
+            setState(() {});
           });
         },
-        child: Icon(Icons.add_location_rounded,size: 30,),
+        child: Icon(
+          Icons.add_location_rounded,
+          size: 30,
+        ),
       ),
       body: GoogleMap(
         initialCameraPosition: _kGooglePlex,
         myLocationEnabled: true,
-        onMapCreated: (GoogleMapController controller){
+        onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
         markers: Set<Marker>.of(_marker),
-
       ),
     );
   }

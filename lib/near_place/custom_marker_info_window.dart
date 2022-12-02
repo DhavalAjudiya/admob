@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:custom_info_window/custom_info_window.dart';
+import 'dart:developer';
+// import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -15,7 +16,7 @@ class CustomMarketInfoWindow extends StatefulWidget {
 }
 
 class _CustomMarketInfoWindowState extends State<CustomMarketInfoWindow> {
-  final CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
+  // final CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
   final Completer<GoogleMapController> _controller = Completer();
   final List<Marker> _marker = [];
   NearbyPlacesResponse nearbyPlacesResponse = NearbyPlacesResponse();
@@ -37,6 +38,7 @@ class _CustomMarketInfoWindowState extends State<CustomMarketInfoWindow> {
     if (nearbyPlacesResponse.results != null) {
       for (int i = 0; i < nearbyPlacesResponse.results!.length; i++) {
         addMarkers(nearbyPlacesResponse.results![i], i);
+        log("nearbyPlacesResponse-----${nearbyPlacesResponse.results![i]}");
       }
     }
   }
@@ -61,15 +63,17 @@ class _CustomMarketInfoWindowState extends State<CustomMarketInfoWindow> {
   }
 
   void navigateToCurrentPosition() {
+    log("navigateToCurrentPosition----------1 ");
     getUserCurrentLocation().then((value) async {
       debugPrint('My current location');
       debugPrint(value.latitude.toString() + value.longitude.toString());
+      log("navigateToCurrentPosition----------2  :${value.latitude} :${value.longitude} :${value.altitude} :${value.accuracy} ");
 
       _marker.add(Marker(
-          markerId: MarkerId("yeiuwe87"),
+          markerId: const MarkerId("yeiuwe87"),
           position: LatLng(value.latitude, value.longitude),
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
-          infoWindow: InfoWindow(
+          infoWindow: const InfoWindow(
             title: 'My current location',
           )));
 
@@ -90,7 +94,7 @@ class _CustomMarketInfoWindowState extends State<CustomMarketInfoWindow> {
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+    zoom: 20.4746,
   );
 
   @override
@@ -103,17 +107,17 @@ class _CustomMarketInfoWindowState extends State<CustomMarketInfoWindow> {
               // icon: Icon(Icons.book)
               itemBuilder: (context) {
             return [
-              PopupMenuItem<int>(
+              const PopupMenuItem<int>(
                 value: 0,
                 child: Text("Restaurant"),
               ),
-              PopupMenuItem<int>(
+              const PopupMenuItem<int>(
                 value: 1,
                 child: Text("Hospital"),
               ),
-              PopupMenuItem<int>(
+              const PopupMenuItem<int>(
                 value: 2,
-                child: Text("Mosque"),
+                child: const Text("Mosque"),
               ),
             ];
           }, onSelected: (value) {
@@ -133,6 +137,7 @@ class _CustomMarketInfoWindowState extends State<CustomMarketInfoWindow> {
       body: Stack(
         children: [
           GoogleMap(
+            minMaxZoomPreference: MinMaxZoomPreference.unbounded,
             mapType: MapType.hybrid,
             initialCameraPosition: _kGooglePlex,
             myLocationEnabled: true,
@@ -141,25 +146,27 @@ class _CustomMarketInfoWindowState extends State<CustomMarketInfoWindow> {
             },
             markers: Set<Marker>.of(_marker),
           ),
-          CustomInfoWindow(
-            controller: _customInfoWindowController,
-            height: 0,
-            width: 0,
-            offset: 0,
-          )
+          // CustomInfoWindow(
+          //   controller: _customInfoWindowController,
+          //   height: 20,
+          //   width: 0,
+          //   offset: 0,
+          // )
         ],
       ),
     );
   }
 
   void getNearbyPlaces(String type) async {
+    loadData();
+
     _marker.clear();
     var url = Uri.parse('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' +
         currentLat.toString() +
         ',' +
         currentLng.toString() +
         '&radius=1500&type=' +
-        "hospital" +
+        "restaurant" +
         '&key=AIzaSyDdm-Ywb7OBY-aehPYvhYKiZZjIDn4kRAM');
 
     var response = await http.post(url);
