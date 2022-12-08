@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_insta/flutter_insta.dart';
+import 'package:testadmob/Ads%20Helper/native_ads.dart';
 
 void main() {
   runApp(MyApp());
@@ -95,6 +96,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       child: Center(
         child: Column(
           children: [
+            const NativeAds(),
             TextField(
               decoration: const InputDecoration(contentPadding: EdgeInsets.all(10)),
               controller: usernameController,
