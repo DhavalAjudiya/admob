@@ -101,6 +101,8 @@ dependencies:
   geolocator:
   custom_info_window: ^1.0.1
   flutter_jigsaw_puzzle: ^0.1.0
+  photo_card_swiper:
+    path: ./package/photo_card_swiper-main
 
 
 

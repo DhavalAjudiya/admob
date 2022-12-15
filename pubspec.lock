@@ -1045,6 +1045,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.0"
+  photo_card_swiper:
+    dependency: "direct main"
+    description:
+      path: "package/photo_card_swiper-main"
+      relative: true
+    source: path
+    version: "0.0.6"
   pie_chart:
     dependency: "direct main"
     description:
